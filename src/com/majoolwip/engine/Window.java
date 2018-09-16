@@ -27,10 +27,8 @@ public class Window implements WindowListener {
 
 		frame = new Frame(settings.getTitle());
 		insets = frame.getInsets();
-		frame.setSize((int)(settings.getWidth() * settings.getScale()) + insets.left + insets.right,
-				      (int)(settings.getHeight() * settings.getScale()) + insets.top + insets.bottom);
+		frame.setSize(0,0);
 		frame.setResizable(false);
-		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 
 		frame.createBufferStrategy(2);
@@ -43,11 +41,13 @@ public class Window implements WindowListener {
 
 	public void update() {
 		insets = frame.getInsets();
-		if(frame.getWidth() != insets.left + insets.right + (int)(image.getWidth() * 2)) {
-			frame.setSize(insets.left + insets.right + (int)(image.getWidth() * 2), frame.getHeight());
+		if(frame.getWidth() != insets.left + insets.right + (int)(image.getWidth() * settings.getScale())) {
+			frame.setSize(insets.left + insets.right + (int)(image.getWidth() * settings.getScale()), frame.getHeight());
+			frame.setLocationRelativeTo(null);
 		}
-		if(frame.getHeight() != insets.top + insets.bottom + (int)(image.getHeight() * 2)) {
-			frame.setSize(frame.getWidth(), insets.top + insets.bottom + (int) (image.getHeight() * 2));
+		if(frame.getHeight() != insets.top + insets.bottom + (int)(image.getHeight() * settings.getScale())) {
+			frame.setSize(frame.getWidth(), insets.top + insets.bottom + (int) (image.getHeight() * settings.getScale()));
+			frame.setLocationRelativeTo(null);
 		}
 		do {
 			do {
