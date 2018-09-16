@@ -7,6 +7,7 @@ package pixengine.test;
 import com.majoolwip.engine.Game;
 import com.majoolwip.engine.Pix;
 import com.majoolwip.engine.Renderer;
+import com.majoolwip.engine.gfx.PixFont;
 import com.majoolwip.engine.util.PixSettings;
 import com.majoolwip.engine.util.State;
 import org.junit.Test;
@@ -22,7 +23,7 @@ public class IntegrationTest {
 
 		@Override
 		public void render(Renderer r) {
-
+			r.drawString("Test", PixFont.STANDARD, 0, 0, -1);
 		}
 	}
 

@@ -11,17 +11,23 @@ import java.io.IOException;
 
 public class Image {
 	private int[] pixels;
-	private int pWidth, pHeight;
+	private int width, height;
 
 	public Image(String path) {
 		try {
 			BufferedImage image = ImageIO.read(new File(path));
-			pWidth = image.getWidth();
-			pHeight = image.getHeight();
-			pixels = image.getRGB(0, 0, pWidth, pHeight, null, 0, pWidth);
+			width = image.getWidth();
+			height = image.getHeight();
+			pixels = image.getRGB(0, 0, width, height, null, 0, width);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public Image(int[] pixel, int width, int height) {
+		this.pixels = pixel;
+		this.width = width;
+		this.height = height;
 	}
 
 	public int[] getPixels() {
@@ -32,19 +38,19 @@ public class Image {
 		this.pixels = pixels;
 	}
 
-	public int getpWidth() {
-		return pWidth;
+	public int getWidth() {
+		return width;
 	}
 
-	public void setpWidth(int pWidth) {
-		this.pWidth = pWidth;
+	public void setWidth(int width) {
+		this.width = width;
 	}
 
-	public int getpHeight() {
-		return pHeight;
+	public int getHeight() {
+		return height;
 	}
 
-	public void setpHeight(int pHeight) {
-		this.pHeight = pHeight;
+	public void setHeight(int height) {
+		this.height = height;
 	}
 }

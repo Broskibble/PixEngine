@@ -6,7 +6,7 @@ package com.majoolwip.engine;
 
 import com.majoolwip.engine.util.PixSettings;
 
-public class Pix implements Runnable {
+public class Pix {
 
 	private static Game game;
 	private static PixSettings settings;
@@ -23,9 +23,7 @@ public class Pix implements Runnable {
 	public void start() {
 		if (running)
 			return;
-
-		Thread thread = new Thread(this, "PIXENGINE");
-		thread.start();
+		run();
 	}
 
 	public static void stop() {
@@ -38,8 +36,7 @@ public class Pix implements Runnable {
 		game.init();
 	}
 
-	@Override
-	public void run() {
+	private void run() {
 		Pix.init();
 		Pix.setRunning(true);
 
@@ -48,7 +45,7 @@ public class Pix implements Runnable {
 		double passedTime;
 		double unprocessedTime = 0;
 		boolean render;
-		while(running) {
+		while(Pix.isRunning()) {
 			firstTime = System.nanoTime() / 1e9f;
 			passedTime = firstTime - lastTime;
 			lastTime = firstTime;
@@ -56,13 +53,13 @@ public class Pix implements Runnable {
 			render = false;
 			while(unprocessedTime >= settings.getUpdateCap()) {
 				unprocessedTime -= settings.getUpdateCap();
-				game.getState().update((float)settings.getUpdateCap());
+				getGame().getState().update((float)settings.getUpdateCap());
 				render = true;
 			}
 
 			if(render) {
 				renderer.clearPixels();
-				game.getState().render(renderer);
+				getGame().getState().render(renderer);
 				window.update();
 			} else {
 				try {
@@ -109,7 +106,11 @@ public class Pix implements Runnable {
 		Pix.renderer = renderer;
 	}
 
-	private static synchronized void setRunning(boolean value) {
+	private static void setRunning(boolean value) {
 		running = value;
+	}
+
+	private static boolean isRunning() {
+		return running;
 	}
 }

@@ -5,6 +5,7 @@
 package com.majoolwip.engine;
 
 import com.majoolwip.engine.gfx.Image;
+import com.majoolwip.engine.gfx.PixFont;
 
 import java.awt.image.DataBufferInt;
 
@@ -34,6 +35,16 @@ public class Renderer {
 		pixels[x + y * pWidth] = value;
 	}
 
+	public void drawString(String text, PixFont font, int offX, int offY, int color) {
+		int unicode;
+		int offset = 0;
+		for (int i = 0; i < text.length(); i++) {
+			unicode = text.codePointAt(i);
+			drawImage(offX + offset, offY, font.getChar(unicode));
+			offset += font.getChar(unicode).getWidth();
+		}
+	}
+
 	public void drawRect(int x, int y, int width, int height, int color) {
 		for(int i = x; i < width; i++) {
 			setPixel(i, y, color);
@@ -55,9 +66,9 @@ public class Renderer {
 	}
 
 	public void drawImage(int x, int y, Image image) {
-		for(; y < image.getpHeight(); y++) {
-			for (; x < image.getpWidth(); x++) {
-				setPixel(x, y, image.getPixels()[x + y * image.getpWidth()]);
+		for(int j = y; j < y + image.getHeight(); j++) {
+			for (int i = x; i < x + image.getWidth(); i++) {
+				setPixel(i, j, image.getPixels()[(i - x) + (j - y) * image.getWidth()]);
 			}
 		}
 	}

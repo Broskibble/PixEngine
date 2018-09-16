@@ -42,6 +42,13 @@ public class Window implements WindowListener {
 	}
 
 	public void update() {
+		insets = frame.getInsets();
+		if(frame.getWidth() != insets.left + insets.right + (int)(image.getWidth() * 2)) {
+			frame.setSize(insets.left + insets.right + (int)(image.getWidth() * 2), frame.getHeight());
+		}
+		if(frame.getHeight() != insets.top + insets.bottom + (int)(image.getHeight() * 2)) {
+			frame.setSize(frame.getWidth(), insets.top + insets.bottom + (int) (image.getHeight() * 2));
+		}
 		do {
 			do {
 				graphics = bufferStrategy.getDrawGraphics();
