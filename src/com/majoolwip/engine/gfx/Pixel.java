@@ -52,10 +52,10 @@ public class Pixel {
 	}
 
 	public static int overlayColor(int pixel, int color) {
-		return getColor(1f,
-						Math.max(getRed(pixel), getRed(color)),
-						Math.max(getGreen(pixel), getGreen(color)),
-						Math.max(getBlue(pixel), getBlue(color)));
+		return getColor(getAlpha(pixel) * getAlpha(color),
+						getRed(pixel) * getRed(color),
+						getGreen(pixel) * getGreen(color),
+						getBlue(pixel) * getBlue(color));
 	}
 
 	public static int alphaBlend(int dest, int source, float alpha) {

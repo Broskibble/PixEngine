@@ -98,21 +98,29 @@ public class Pix {
 		window.dispose();
 	}
 
+	// Temporary until a UI system is implemented.
 	private void renderDebug(int fps) {
 		PixFont f = PixFont.STANDARD;
 		renderer.drawString("FPS: " + fps, 0, f.getMaxHeight() * 0, PixFont.LEFT);
 		renderer.drawString("MouseX: " + input.getMouseX(),  0, f.getMaxHeight() * 1, PixFont.LEFT);
 		renderer.drawString("MouseY: " + input.getMouseY(), 0, f.getMaxHeight() * 2, PixFont.LEFT);
 
-		renderer.drawString("Memory Usage", (int) (Pix.getSettings().getWidth() * (2f / 3f)), 0, PixFont.CENTER);
+		int twothirds = (int) (Pix.getSettings().getWidth() * (3f / 4f));
+
+		renderer.drawString("Memory Usage", twothirds, 0, PixFont.CENTER);
 		double memRatio = (double)PixUtils.getUsedMemory() / PixUtils.getTotalMemory();
 		int barWidth = (int) (Pix.getSettings().getWidth() / 3f);
-		renderer.drawFillRect((int) (Pix.getSettings().getWidth() * (2f/3f) - barWidth / 2f), f.getMaxHeight(),
-								 barWidth, 10, Pixel.GREEN);
-		renderer.drawFillRect((int) (Pix.getSettings().getWidth() * (2f/3f) - barWidth / 2f), f.getMaxHeight(),
-				(int) (barWidth * memRatio), 10, Pixel.RED);
+		renderer.drawFillRect((int) (twothirds - barWidth / 2f), f.getMaxHeight(),
+								 barWidth, f.getMaxHeight(), Pixel.GREEN);
+		renderer.drawFillRect((int) (twothirds - barWidth / 2f), f.getMaxHeight(),
+				(int) (barWidth * memRatio), f.getMaxHeight(), Pixel.RED);
 
-		renderer.setPixel((int) (Pix.getSettings().getWidth() * (2f/3f)), 1, Pixel.YELLOW);
+		renderer.setColorOverlay(Pixel.RED);
+		renderer.drawString("Used: " + PixUtils.getUsedMemory() / 1048576 + " Mib", twothirds, f.getMaxHeight() * 2, PixFont.CENTER);
+		renderer.setColorOverlay(Pixel.GREEN);
+		renderer.drawString("Free: " + (PixUtils.getTotalMemory() - PixUtils.getUsedMemory()) / 1048576  + " Mib", twothirds, f.getMaxHeight() * 3, PixFont.CENTER);
+		renderer.setColorOverlay(Pixel.WHITE);
+		renderer.drawString("Max: " + Runtime.getRuntime().maxMemory() / 1048576 + " Mib", twothirds, f.getMaxHeight() * 4, PixFont.CENTER);
 	}
 
 	public static Game getGame() {

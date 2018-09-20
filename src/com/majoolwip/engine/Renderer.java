@@ -110,4 +110,8 @@ public class Renderer {
 	public void setAlphaMod(float alphaMod) {
 		this.alphaMod = alphaMod;
 	}
+
+	public void setColorOverlay(int color) {
+		this.colorOverlay = color;
+	}
 }
