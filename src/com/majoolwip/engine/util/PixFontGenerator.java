@@ -2,7 +2,10 @@
  * Copyright (c) 2018.  Created by Ryan Moore
  */
 
-package com.majoolwip.engine.gfx;
+package com.majoolwip.engine.util;
+
+import com.majoolwip.engine.Pix;
+import com.majoolwip.engine.gfx.PixImage;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,9 +18,9 @@ public class PixFontGenerator {
 
 	private PixFontGenerator() {}
 
-	public static Image genFontImage(String fontName, int size, int type) {
+	public static PixImage genFontImage(String fontName, int size, int type) {
 		if (!fontExist(fontName)) {
-			System.out.println("Font: " + fontName + " does not exist!");
+			Pix.getLogger().error("Font: " + fontName + " does not exist!");
 			System.exit(1);
 		}
 		Font font = new Font(fontName, type, size);
@@ -34,10 +37,10 @@ public class PixFontGenerator {
 		return createFontImage(font, width, height, size);
 	}
 
-	private static Image createFontImage(Font f, int width, int height, int fontSize) {
+	private static PixImage createFontImage(Font f, int width, int height, int fontSize) {
 		BufferedImage sprite = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 		Graphics2D graphics = sprite.createGraphics();
-		graphics.setColor(Color.MAGENTA);
+		graphics.setColor(new Color(0, true));
 		graphics.fillRect(0, 0, width, height);
 		int x = 0, y = 0;
 		graphics.setFont(f);
@@ -57,7 +60,7 @@ public class PixFontGenerator {
 			x++;
 		}
 		int[] p = sprite.getRGB(0, 0, width, height, null, 0, width);
-		return new Image(p, width, height);
+		return new PixImage(p, width, height);
 	}
 
 	private static int calMaxFontSize(Font font, FontRenderContext frc) {

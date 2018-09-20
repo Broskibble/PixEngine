@@ -110,4 +110,12 @@ public class Window implements WindowListener {
 	public void windowDeactivated(WindowEvent windowEvent) {
 
 	}
+
+	public Insets getInsets() {
+		return insets;
+	}
+
+	public Frame getFrame() {
+		return frame;
+	}
 }

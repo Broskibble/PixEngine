@@ -4,44 +4,64 @@
 
 package com.majoolwip.engine.gfx;
 
+import com.majoolwip.engine.util.PixFontGenerator;
+
 import java.awt.*;
 import java.util.ArrayList;
 
 public class PixFont {
-	public static final PixFont STANDARD = new PixFont(PixFontGenerator.genFontImage("ubuntu", 18, Font.PLAIN));
 
-	private Image[] charImages;
+	public static final PixFont STANDARD = new PixFont(PixFontGenerator.genFontImage("ubuntu", 10, Font.PLAIN));
 
+	public static final int LEFT = 0;
+	public static final int RIGHT = 1;
+	public static final int CENTER = 2;
+
+	private PixImage[] charPixImages;
+	private int height;
 	public PixFont(String path) {
-		this(new Image(path));
+		this(new PixImage(path));
 	}
 
-	public PixFont(Image image) {
+	public PixFont(PixImage pixImage) {
 		int start = 0;
-		ArrayList<Image> tempImages = new ArrayList<>();
-		for (int i = 0; i < image.getWidth(); i++) {
-			if (image.getPixels()[i] == 0xff0000ff) {
+		ArrayList<PixImage> tempPixImages = new ArrayList<>();
+		for (int i = 0; i < pixImage.getWidth(); i++) {
+			if (pixImage.getPixels()[i] == 0xff0000ff) {
 				start = i;
-			} else if (image.getPixels()[i] == 0xffffff00) {
+			} else if (pixImage.getPixels()[i] == 0xffffff00) {
 				int width = i - start;
-				int[] p = new int[width * (image.getHeight() - 1)];
-				for (int y = 0; y < image.getHeight() - 1; y++) {
+				int[] p = new int[width * (pixImage.getHeight() - 1)];
+				for (int y = 0; y < pixImage.getHeight() - 1; y++) {
 					for (int x = start; x < start + width; x++) {
-						p[(x - start) + y * width] = image.getPixels()[x + (y + 1) * image.getWidth()];
+						p[(x - start) + y * width] = pixImage.getPixels()[x + (y + 1) * pixImage.getWidth()];
 					}
 				}
-				tempImages.add(new Image(p, width, image.getHeight() - 1));
+				tempPixImages.add(new PixImage(p, width, pixImage.getHeight() - 1));
 			}
 		}
-		charImages = new Image[tempImages.size()];
-		tempImages.toArray(charImages);
+		charPixImages = new PixImage[tempPixImages.size()];
+		tempPixImages.toArray(charPixImages);
+		height = getChar(0).getHeight();
 	}
 
-	public Image getChar(int unicode) {
-		if (unicode > charImages.length || unicode < 0) {
-			return charImages[0];
+	public PixImage getChar(int unicode) {
+		if (unicode > charPixImages.length || unicode < 0) {
+			return charPixImages[0];
 		} else {
-			return charImages[unicode];
+			return charPixImages[unicode];
 		}
+	}
+
+	public int getStringWidth(String text) {
+		int res = 0;
+		for(int i = 0; i < text.length(); i++) {
+			res += getChar(text.codePointAt(i)).getWidth();
+		}
+		return res;
+	}
+
+	public int getMaxHeight() {
+		return height;
 	}
 }

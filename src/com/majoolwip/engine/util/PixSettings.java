@@ -10,6 +10,15 @@ public class PixSettings {
 	private int width = 320, height = 240;
 	private float scale = 2.0f;
 	private double updateCap = 1.0 / 60.0;
+	private boolean debug = true;
+
+	public boolean isDebug() {
+		return debug;
+	}
+
+	public void setDebug(boolean debug) {
+		this.debug = debug;
+	}
 
 	public String getTitle() {
 		return title;

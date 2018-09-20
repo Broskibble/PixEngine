@@ -18,12 +18,10 @@ public class IntegrationTest {
 
 		@Override
 		public void update(float dt) {
-
 		}
 
 		@Override
 		public void render(Renderer r) {
-			r.drawString("Test", PixFont.STANDARD, 0, 0, -1);
 		}
 	}
 
