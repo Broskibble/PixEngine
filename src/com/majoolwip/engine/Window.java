@@ -51,6 +51,11 @@ public class Window implements WindowListener {
 		}
 		do {
 			do {
+				bufferStrategy = frame.getBufferStrategy();
+				if(bufferStrategy == null) {
+					frame.createBufferStrategy(2);
+					continue;
+				}
 				graphics = bufferStrategy.getDrawGraphics();
 				graphics.drawImage(image, insets.left,
 										  insets.top,

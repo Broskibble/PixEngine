@@ -9,9 +9,8 @@ import com.majoolwip.engine.gfx.Pixel;
 import com.majoolwip.engine.util.PixLogger;
 import com.majoolwip.engine.util.PixSettings;
 import com.majoolwip.engine.util.PixUtils;
+import com.sun.management.GarbageCollectionNotificationInfo;
 
-import java.awt.*;
-import java.lang.management.MemoryUsage;
 
 public class Pix {
 	private static final PixLogger logger = new PixLogger();
@@ -51,7 +50,7 @@ public class Pix {
 		Pix.init();
 
 		double firstTime;
-		double lastTime = System.nanoTime() / 1e9f;
+		double lastTime = System.nanoTime() / 1e9d;
 		double passedTime;
 		double unprocessedTime = 0;
 		double frameTime = 0;
@@ -59,16 +58,19 @@ public class Pix {
 		int fps = 0;
 
 		boolean render;
+
+
 		while(Pix.isRunning()) {
-			firstTime = System.nanoTime() / 1e9f;
+			firstTime = System.nanoTime() / 1e9d;
 			passedTime = firstTime - lastTime;
 			lastTime = firstTime;
 			unprocessedTime += passedTime;
 			frameTime += passedTime;
 			render = false;
-			while(unprocessedTime >= settings.getUpdateCap()) {
-				unprocessedTime -= settings.getUpdateCap();
-				getGame().getState().update((float)settings.getUpdateCap());
+			double cap = Pix.getSettings().isLockFPS() ? Pix.getSettings().getUpdateCap() : passedTime;
+			while(unprocessedTime >= cap && unprocessedTime != 0) {
+				unprocessedTime -= cap;
+				getGame().getState().update((float)cap);
 				render = true;
 			}
 
@@ -79,7 +81,7 @@ public class Pix {
 			}
 
 			if(render) {
-				renderer.clearPixels();
+				renderer.clear();
 				getGame().getState().render(renderer);
 				if(Pix.getSettings().isDebug())
 					renderDebug(fps);
@@ -88,7 +90,9 @@ public class Pix {
 			} else {
 				try {
 					Thread.sleep(1);
-				} catch (InterruptedException e) { /* purposely left blank */ }
+				} catch (InterruptedException e) {
+					Thread.currentThread().interrupt();
+				}
 			}
 		}
 		cleanUp();
@@ -101,8 +105,8 @@ public class Pix {
 	// Temporary until a UI system is implemented.
 	private void renderDebug(int fps) {
 		PixFont f = PixFont.STANDARD;
-		renderer.drawString("FPS: " + fps, 0, f.getMaxHeight() * 0, PixFont.LEFT);
-		renderer.drawString("MouseX: " + input.getMouseX(),  0, f.getMaxHeight() * 1, PixFont.LEFT);
+		renderer.drawString("FPS: " + fps, 0, 0, PixFont.LEFT);
+		renderer.drawString("MouseX: " + input.getMouseX(),  0, f.getMaxHeight(), PixFont.LEFT);
 		renderer.drawString("MouseY: " + input.getMouseY(), 0, f.getMaxHeight() * 2, PixFont.LEFT);
 
 		int twothirds = (int) (Pix.getSettings().getWidth() * (3f / 4f));

@@ -11,6 +11,7 @@ public class PixSettings {
 	private float scale = 2.0f;
 	private double updateCap = 1.0 / 60.0;
 	private boolean debug = true;
+	private boolean lockFPS = false;
 
 	public boolean isDebug() {
 		return debug;
@@ -58,5 +59,13 @@ public class PixSettings {
 
 	public void setScale(float scale) {
 		this.scale = scale;
+	}
+
+	public boolean isLockFPS() {
+		return lockFPS;
+	}
+
+	public void setLockFPS(boolean lockFPS) {
+		this.lockFPS = lockFPS;
 	}
 }

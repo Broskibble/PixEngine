@@ -15,6 +15,7 @@ public class Renderer {
 	private PixFont font = PixFont.STANDARD;
 
 	private int[] pixels;
+	private int[] depth;
 	private int pWidth, pHeight;
 
 	private float alphaMod = 1f;
@@ -25,9 +26,10 @@ public class Renderer {
 		this.pWidth = window.getImage().getWidth();
 		this.pHeight = window.getImage().getHeight();
 		this.pixels = ((DataBufferInt)window.getImage().getRaster().getDataBuffer()).getData();
+		this.depth = new int[pixels.length];
 	}
 
-	public void clearPixels() {
+	public void clear() {
 		for (int i = 0; i < pixels.length; i++) {
 			pixels[i] = clearColor;
 		}
