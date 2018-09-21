@@ -2,8 +2,6 @@
  * Copyright (c) 2018.  Created by Ryan Moore
  */
 
-package pixengine.test;
-
 import com.majoolwip.engine.Game;
 import com.majoolwip.engine.Pix;
 import com.majoolwip.engine.Renderer;

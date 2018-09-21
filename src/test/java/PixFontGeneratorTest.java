@@ -2,8 +2,6 @@
  * Copyright (c) 2018.  Created by Ryan Moore
  */
 
-package pixengine.test;
-
 import com.majoolwip.engine.gfx.PixImage;
 import com.majoolwip.engine.gfx.PixFont;
 import com.majoolwip.engine.util.PixFontGenerator;
