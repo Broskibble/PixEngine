@@ -2,7 +2,7 @@
  * Copyright (c) 2018.  Created by Ryan Moore
  */
 
-import com.majoolwip.engine.gfx.PixImage;
+package PixTest;import com.majoolwip.engine.gfx.PixImage;
 import com.majoolwip.engine.gfx.PixFont;
 import com.majoolwip.engine.util.PixFontGenerator;
 import org.junit.Assert;

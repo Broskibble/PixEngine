@@ -2,7 +2,7 @@
  * Copyright (c) 2018.  Created by Ryan Moore
  */
 
-import com.majoolwip.engine.Game;
+package PixTest;import com.majoolwip.engine.Game;
 import com.majoolwip.engine.Pix;
 import com.majoolwip.engine.Renderer;
 import com.majoolwip.engine.gfx.PixFont;
