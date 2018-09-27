@@ -39,7 +39,7 @@ public class Renderer {
 		if(x < 0 || x >= pWidth || y < 0 || y >= pHeight)
 			return;
 
-		float alpha = Pixel.getAlpha(value) - (1 - alphaMod);
+		float alpha = Pixel.getAlpha(value) - (1f - alphaMod);
 		if(colorOverlay != Pixel.WHITE) {
 			value = Pixel.overlayColor(value, colorOverlay);
 		}
@@ -48,12 +48,12 @@ public class Renderer {
 			pixels[x + y * pWidth] = value;
 		} else if(alpha != 0) {
 			pixels[x + y * pWidth] = Pixel.alphaBlend(pixels[x + y * pWidth],
-													  value);
+													  value, alpha);
 		}
 
 	}
 
-	public void drawString(String text, int offX, int offY, int justified) {
+	public void draw2DString(String text, int offX, int offY, int justified) {
 		int unicode;
 		int offset = 0;
 		if(justified == PixFont.RIGHT) {
@@ -63,12 +63,12 @@ public class Renderer {
 		}
 		for (int i = 0; i < text.length(); i++) {
 			unicode = text.codePointAt(i);
-			drawImage(offX + offset, offY, font.getChar(unicode));
+			draw2DImage(offX + offset, offY, font.getChar(unicode));
 			offset += font.getChar(unicode).getWidth();
 		}
 	}
 
-	public void drawRect(int x, int y, int width, int height, int color) {
+	public void draw2DRect(int x, int y, int width, int height, int color) {
 		for(int i = x; i < x + width; i++) {
 			setPixel(i, y, color);
 			setPixel(i, y + height - 1, color);
@@ -80,7 +80,7 @@ public class Renderer {
 		}
 	}
 
-	public void drawFillRect(int x, int y, int width, int height, int color) {
+	public void draw2DFillRect(int x, int y, int width, int height, int color) {
 		for(int j = y ; j < y + height; j++) {
 			for(int i = x; i < x + width; i++) {
 				setPixel(i, j, color);
@@ -88,7 +88,7 @@ public class Renderer {
 		}
 	}
 
-	public void drawImage(int x, int y, PixImage pixImage) {
+	public void draw2DImage(int x, int y, PixImage pixImage) {
 		for(int j = y; j < y + pixImage.getHeight(); j++) {
 			for (int i = x; i < x + pixImage.getWidth(); i++) {
 				setPixel(i, j, pixImage.getPixels()[(i - x) + (j - y) * pixImage.getWidth()]);

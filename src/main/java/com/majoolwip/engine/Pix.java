@@ -104,27 +104,29 @@ public class Pix {
 
 	// Temporary until a UI system is implemented.
 	private void renderDebug(int fps) {
+		renderer.setAlphaMod(0.5f);
 		PixFont f = PixFont.STANDARD;
-		renderer.drawString("FPS: " + fps, 0, 0, PixFont.LEFT);
-		renderer.drawString("MouseX: " + input.getMouseX(),  0, f.getMaxHeight(), PixFont.LEFT);
-		renderer.drawString("MouseY: " + input.getMouseY(), 0, f.getMaxHeight() * 2, PixFont.LEFT);
+		renderer.draw2DString("FPS: " + fps, 0, 0, PixFont.LEFT);
+		renderer.draw2DString("MouseX: " + input.getMouseX(),  0, f.getMaxHeight(), PixFont.LEFT);
+		renderer.draw2DString("MouseY: " + input.getMouseY(), 0, f.getMaxHeight() * 2, PixFont.LEFT);
 
 		int twothirds = (int) (Pix.getSettings().getWidth() * (3f / 4f));
 
-		renderer.drawString("Memory Usage", twothirds, 0, PixFont.CENTER);
+		renderer.draw2DString("Memory Usage", twothirds, 0, PixFont.CENTER);
 		double memRatio = (double)PixUtils.getUsedMemory() / PixUtils.getTotalMemory();
 		int barWidth = (int) (Pix.getSettings().getWidth() / 3f);
-		renderer.drawFillRect((int) (twothirds - barWidth / 2f), f.getMaxHeight(),
+		renderer.draw2DFillRect((int) (twothirds - barWidth / 2f), f.getMaxHeight(),
 								 barWidth, f.getMaxHeight(), Pixel.GREEN);
-		renderer.drawFillRect((int) (twothirds - barWidth / 2f), f.getMaxHeight(),
+		renderer.draw2DFillRect((int) (twothirds - barWidth / 2f), f.getMaxHeight(),
 				(int) (barWidth * memRatio), f.getMaxHeight(), Pixel.RED);
 
 		renderer.setColorOverlay(Pixel.RED);
-		renderer.drawString("Used: " + PixUtils.getUsedMemory() / 1048576 + " Mib", twothirds, f.getMaxHeight() * 2, PixFont.CENTER);
+		renderer.draw2DString("Used: " + PixUtils.getUsedMemory() / 1048576 + " Mib", twothirds, f.getMaxHeight() * 2, PixFont.CENTER);
 		renderer.setColorOverlay(Pixel.GREEN);
-		renderer.drawString("Free: " + (PixUtils.getTotalMemory() - PixUtils.getUsedMemory()) / 1048576  + " Mib", twothirds, f.getMaxHeight() * 3, PixFont.CENTER);
+		renderer.draw2DString("Free: " + (PixUtils.getTotalMemory() - PixUtils.getUsedMemory()) / 1048576  + " Mib", twothirds, f.getMaxHeight() * 3, PixFont.CENTER);
 		renderer.setColorOverlay(Pixel.WHITE);
-		renderer.drawString("Max: " + Runtime.getRuntime().maxMemory() / 1048576 + " Mib", twothirds, f.getMaxHeight() * 4, PixFont.CENTER);
+		renderer.draw2DString("Max: " + Runtime.getRuntime().maxMemory() / 1048576 + " Mib", twothirds, f.getMaxHeight() * 4, PixFont.CENTER);
+		renderer.setAlphaMod(1f);
 	}
 
 	public static Game getGame() {
