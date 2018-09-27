@@ -6,9 +6,13 @@ package PixTest;import com.majoolwip.engine.Game;
 import com.majoolwip.engine.Pix;
 import com.majoolwip.engine.Renderer;
 import com.majoolwip.engine.gfx.PixFont;
+import com.majoolwip.engine.util.PixFontGenerator;
 import com.majoolwip.engine.util.PixSettings;
 import com.majoolwip.engine.util.State;
 import org.junit.Test;
+
+import java.awt.*;
+import java.io.IOException;
 
 public class IntegrationTest {
 

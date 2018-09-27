@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class PixFont {
 
-	public static final PixFont STANDARD = new PixFont(PixFontGenerator.genFontImage("ubuntu", 10, Font.PLAIN));
+	public static final PixFont STANDARD = new PixFont("src/main/res/fonts/sfont.png");
 
 	public static final int LEFT = 0;
 	public static final int RIGHT = 1;
